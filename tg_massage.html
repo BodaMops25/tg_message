@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Telegram message</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+   <style>      
+      body {
+         width: 100vw;
+         height: 100vh;
+         margin: 0;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         background-color: #0e1621;
+         font-family: 'Noto Sans', sans-serif;
+      }
+      
+      textarea {
+         overflow: hidden;
+      }
+      
+      .message-container {
+         display: flex;
+         justify-content: center;
+         align-items: end;
+      }
+      
+      .message-container-avatar-container {
+         width: 45px;
+         height: 45px;
+         border-radius: 50%;
+         overflow: hidden;
+         background-color: #fff;
+         text-align: center;
+         margin-right: 10px;
+         cursor: pointer;
+         background: url(https://www.seekpng.com/png/detail/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png) no-repeat center;
+         background-size: cover;
+      }
+      
+      .message-container-message {
+         background-color: #223040;
+         border-radius: 15px;
+         padding: 8px 14px;
+         max-width: 300px;
+         padding-bottom: 10px;
+      }
+      
+      .message-username {
+         font-size: 18px;
+         line-height: 28px;
+         color: #e65b91;
+         font-weight: bold;
+         background-color: transparent;
+         border: none;
+         padding: 0;
+         font-family: 'Noto Sans', sans-serif;
+         display: block;
+      }
+      
+      .message-text {
+         font-size: 18px;
+         color: #ffff;
+         line-height: 22px;
+         background-color: transparent;
+         border: none;
+         padding: 0;
+         font-family: 'Noto Sans', sans-serif;
+         display: block;
+      }
+      
+      .focus-text-area {
+         resize: none;
+      }
+      
+      .focus-text-area:focus {
+         resize: both;
+      }
+      
+      .activEdit {
+         background-color: rgba(255, 255, 255, 0.15);
+      }
+      
+      input[type=file] {
+         display: none;
+      }
+   </style>
+</head>
+<body>
+   
+   <div class="message-container">
+      
+      <div id="userImg" class="message-container-avatar-container" onclick="getNode('#imgInput').click()">      </div>
+      
+      <div class="message-container-message">
+         <textarea id="username" class="message-username focus-text-area" rows="1" cols="20" onfocus="getNode('#usernameColorInput').style.display = 'block'" onblur="setTimeout(()=>getNode('#usernameColorInput').style.display = 'none', 100)">Bogdan Конопльов</textarea>
+         <input type="color" value="#e65b91" id="usernameColorInput" style="display: none" oninput="getNode('#username').style.color = this.value">
+         <textarea class="message-text focus-text-area" rows="2" cols="26">от такой новости мне хочется жить</textarea>
+      </div>
+      
+      <input type="file" id="imgInput">
+   </div>
+   
+   <script>
+      
+      function getNode(node) {
+         return document.querySelector(node)
+      }
+      
+      getNode('#imgInput').onchange = (e) => {
+         
+         const file = e.target.files[0]
+         
+         if(!file.type.match('image')) {
+            alert("Not image!")
+         }
+         else {
+            
+            const reader = new FileReader()
+            
+            
+            reader.onload = eRead => {
+               
+               getNode('#userImg').style.backgroundImage = `url(${eRead.target.result})`
+            }
+            
+            reader.readAsDataURL(file)
+         }         
+      }
+   
+   </script>
+</body>
+</html>
